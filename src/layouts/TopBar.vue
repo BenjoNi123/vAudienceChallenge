@@ -4,8 +4,10 @@
     <span @click="$router.push('/home')">Spect8.live</span>
       </div>
       <div>
-    <button class="button"  @click="signIn()">SignIn</button>
-    <button class="button"  @click="signUp()">SignUp</button>
+        
+    <button class="button" @click="takeHome()">Home</button>
+    <button class="button" @click="signIn()">SignIn</button>
+    <button class="button" @click="signUp()">SignUp</button>
 
       </div>
   </div>
@@ -14,17 +16,22 @@
 import {  Component,Vue } from 'vue-property-decorator';
 @Component({})
 export default class TopBar extends Vue {
+
+     takeHome(){
+      this.$router.push('/')
+      console.log(console.log(this.$router.push('/')))
+    }
     signIn(){
-        console.log("this is sign in")
-        return this.$router.push('../signin');
+     
+         this.$router.push('/signin');
         
     }
     signUp(){
-        console.log("this is sign up")
-       return this.$router.push('../signup');
+      
+        this.$router.push('/signup');
         
 
-    }
+    } 
 }
 </script>
 

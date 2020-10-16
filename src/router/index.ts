@@ -1,36 +1,30 @@
 import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
-import Home from '@/pages/home/Home.vue'
-import Signin from '@/pages/signin/Signin.vue'
-import Signup from '@/pages/signup/Signup.vue'
-
+import VueRouter,  { RouteConfig } from 'vue-router'
 Vue.use(VueRouter)
 
-const routes: Array<RouteConfig> = [
-  
+const routes: RouteConfig[] = [
+  {
+    path: '/',
+    name: 'Home',
+    component: ()=> import('../pages/home/index.vue'),
+  },
+  {
+    path: '/signin',
+    name: 'Signin',
+    component: ()=> import('../pages/signin/index.vue'),
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: ()=> import('../pages/signup/index.vue'),
+  }
   
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes:[
-    {
-      path: '/',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/signin',
-      name: 'Signin',
-      component: Signin
-    },
-    {
-      path: '/signup',
-      name: 'Signup',
-      component: Signup
-    }
-  ]
+  routes,
 })
 
 export default router

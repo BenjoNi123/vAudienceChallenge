@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <Navigation v-if="openNav"/>
-      <top-bar></top-bar>
+      <TopBar/>
     </div>
     <router-view></router-view>
   </div>
@@ -35,7 +35,7 @@ body{ margin: 0}
 }
 .routerClass{z-index: 100;}
 #nav {
-  z-index: 0;
+  z-index: 999;
   display: flex;
   background-color: rgba(24, 24, 24, 1);
   position: fixed;

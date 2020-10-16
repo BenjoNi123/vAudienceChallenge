@@ -1,8 +1,7 @@
 <template>
     <div class="sideNav">
-        <menu-icon :size="32" fillColor="#F9F9F9" />
-        <router-link to="/signin" >LogIN</router-link>
-        <router-link to="/signup" >SignUp</router-link>
+        <MenuIcon :size="32" fillColor="#F9F9F9" />
+        
     </div>
 </template>
 
@@ -15,14 +14,7 @@ import MenuIcon from 'vue-material-design-icons/Menu.vue';
     }
 })
 export default class Navigation extends Vue {
-    signIn(){
-        this.$router.push("/signin");
-        console.log("sign me in")
-    }
-    signUp(){
-        this.$router.push("/signup")
-        console.log("sign me up")
-    }
+   
 
 }
 </script>

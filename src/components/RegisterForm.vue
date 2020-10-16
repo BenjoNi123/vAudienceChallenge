@@ -3,8 +3,10 @@
         <div>
         <form>
         <div class="formClass">
-            <span class="label">Enter Username or E-Mail:</span>
-            <input v-model="username" type="text" class="inputField" placeholder="e.g. test@test.com">
+            <span class="label">Enter Username:</span>
+            <input v-model="username" type="text" class="inputField" placeholder="e.g. Testuser">
+            <span class="label">Enter E-Mail:</span>
+            <input v-model="email" type="email" class="inputField" placeholder="e.g. test@test.com">
             <span class="label"> Enter Password:</span>
             <div class="passField">
                 <input v-model="password" class="inputField" type="text"  placeholder="testerpass1234." >       
@@ -36,9 +38,11 @@ export default class LoginForm extends Vue {
 
     username!: string;
     password!: string;
+     
+    
   
     testMe(){
-        console.log('signin')
+        console.log('signup')
     }
     async logMe(){
         try {

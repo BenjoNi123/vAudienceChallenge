@@ -1,5 +1,6 @@
 <template>
     <div class="logIn">
+      <h1>Sign In</h1>
         <LoginForm/>
     </div>
 </template>
@@ -21,6 +22,7 @@ export default class Home extends Vue {}
     .logIn{
        position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-content: center;
     align-items: center;
