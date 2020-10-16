@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-        <form>
+        <form @submit.prevent="testMe()">
         <div class="formClass">
             <span class="label">Enter Username:</span>
             <input v-model="username" type="text" class="inputField" placeholder="e.g. Testuser">
@@ -11,7 +11,7 @@
             <div class="passField">
                 <input v-model="password" class="inputField" type="text"  placeholder="testerpass1234." >       
             </div>
-            <button id="submitButton" @click.prevent="testMe()" class="buttonClass" >Log In</button>
+            <button type="submit"  class="buttonClass" >Log In</button>
         </div>  
         </form>  
        </div>
@@ -36,8 +36,9 @@ import {login} from '../Auth'
 
 export default class LoginForm extends Vue {
 
-    username!: string;
-    password!: string;
+    username="";
+    password="";
+    email=""
      
     
   
@@ -89,7 +90,10 @@ padding: 10px;
     border-radius: 8px;
     background-color: rgb(255 85 0)
 }
-#submitButton:hover{cursor: pointer;}
+.buttonClass:hover{
+    cursor: pointer;
+}
+
 
 
 .label{

@@ -22,17 +22,14 @@
                             <div class="form-group">
                                 <div class="payment-group">
                                     <div v-for="option in paymentOptions" :key="option.id">
-                                        <img src="@/assets/PaymentIcons/paypal.png" :alt="option.img">
-                                        <input type="radio" :id="option.value" :value="option.value" v-model="picked">
-                                        
-                                        
+                                        <img :src="getIcon(option.icon)">
+                                        <input type="radio" :id="option.value" :value="option.value" v-model="picked"> 
                                     </div>
-                                    
                                 </div>
                                 <label>You have selected the {{currentVideo.title}} Video</label>
                                 <div class="modal-buttons-div">
-                                <button style="background-color:red"  class="modal-buttons">No Pay</button>
-                                <button style="background-color:cyan" class="modal-buttons">Pay</button>
+                                  <button style="background-color:red"  class="modal-buttons">No Pay</button>
+                                  <button style="background-color:cyan" class="modal-buttons">Pay</button>
                                 </div>
                                 
                             </div>
@@ -54,13 +51,13 @@ import { Component, Vue } from 'vue-property-decorator';
 
 })
 export default class VideosList extends Vue {
-    paymentOptions: {id: number; value: string; title: string; img: string}[]=[
-        {id: 1, value: "mastercard", title: "MasterCard", img: '@/assets/PaymentIcons/mastercard.png'},
-        {id: 2, value: "paypal", title: "Paypal", img: '@/assets/PaymentIcons/paypal.png'},
-        {id: 3, value: "visa", title: "Visa", img: '@/assets/PaymentIcons/visa.png'},
-        {id: 4, value: "maestro", title: "Maestro", img: '@/assets/PaymentIcons/maestro.png'},
-        {id: 5, value: "skrill", title: "Skrill", img: '@/assets/PaymentIcons/skrill.png'},
-        {id: 6, value: "westernunion", title: "WesternUnion", img: '@/assets/PaymentIcons/wu.png'},
+    paymentOptions: {id: number; value: string; title: string; icon: string}[]=[
+        {id: 1, value: "mastercard", title: "MasterCard", icon: 'mastercard'},
+        {id: 2, value: "paypal", title: "Paypal", icon: 'paypal'},
+        {id: 3, value: "visa", title: "Visa", icon: 'visa'},
+        {id: 4, value: "maestro", title: "Maestro", icon: 'maestro'},
+        {id: 5, value: "skrill", title: "Skrill", icon: 'skrill'},
+        {id: 6, value: "westernunion", title: "WesternUnion", icon: 'wu'},
         
     ]
     streams: { id: number; title: string; url: string; poster: string }[]= [
@@ -76,13 +73,13 @@ export default class VideosList extends Vue {
     {id: 10,title: "video10", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/260"}
   ] ;
   myModal= false;
-
-/*  constructor(){
-   super();
-   this.streams;
- } */
  picked="";
  currentVideo={};
+
+getIcon(icon: string): string{
+  return require('@/assets/PaymentIcons/'+ icon + '.png')
+}
+
  clickTest(id: number, title: string){
      this.currentVideo = {id, title}
      this.myModal=true

@@ -19,7 +19,7 @@ export default class TopBar extends Vue {
 
      takeHome(){
       this.$router.push('/')
-      console.log(console.log(this.$router.push('/')))
+     
     }
     signIn(){
      
