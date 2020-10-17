@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <Navigation/>
-      
+      <Navigation />
     </div>
     <router-view></router-view>
   </div>
@@ -10,18 +9,17 @@
 
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Navigation from '@/layouts/Navigation.vue';
+import { Component, Vue } from "vue-property-decorator";
+import Navigation from "@/layouts/Navigation.vue";
 
-@Component({components: {Navigation}})
-export default class App extends Vue {
-
-}
-
+@Component({ components: { Navigation } })
+export default class App extends Vue {}
 </script>
 
 <style>
-body{ margin: 0}
+body {
+  margin: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -30,10 +28,12 @@ body{ margin: 0}
   background-color: rgba(18, 18, 18, 1);
   height: 100vh;
   width: 100%;
-    
+
   background-size: cover;
 }
-.routerClass{z-index: 100;}
+.routerClass {
+  z-index: 100;
+}
 #nav {
   z-index: 999;
   display: flex;
