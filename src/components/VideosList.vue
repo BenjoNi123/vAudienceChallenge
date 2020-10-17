@@ -5,15 +5,7 @@
     </div>
     <div class="content">
       <div
-        @click="
-          openPaymentModal(
-            stream.id,
-            stream.title,
-            stream.url,
-            stream.poster,
-            stream.price
-          )
-        "
+        @click="openPaymentModal(stream)"
         class="loopDiv"
         v-for="stream in streams"
         :key="stream.id"
@@ -38,9 +30,7 @@
               <div class="modal-dialog">
                 <div style="background-color: #f9f9f9" class="modal-content">
                   <div class="modal-header">
-                    <button @click="isModalOpened = false" class="closeButton">
-                      X
-                    </button>
+                    <button @click="noPay()" class="closeButton">X</button>
                     <h2 class="modal-title">Payment Options</h2>
                   </div>
                   <div class="modal-body">
@@ -73,7 +63,7 @@
                         <button
                           style="background-color: red"
                           class="modal-buttons"
-                          @click="isModalOpened = false"
+                          @click="noPay()"
                         >
                           No Pay
                         </button>
@@ -98,13 +88,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-interface SingleVideo {
-  id: number;
-  title: string;
-  url: string;
-  poster: string;
-  price: number;
-}
+import { SingleVideo, getVideos } from "@/ApiCenter";
 
 interface SinglePaymentOption {
   id: number;
@@ -113,10 +97,6 @@ interface SinglePaymentOption {
   icon: string;
 }
 
-interface SelectedPaymentOption {
-  video: SingleVideo;
-  paymentOption: string;
-}
 @Component({})
 export default class VideosList extends Vue {
   paymentOptions: SinglePaymentOption[] = [
@@ -127,101 +107,33 @@ export default class VideosList extends Vue {
     { id: 5, value: "skrill", title: "Skrill", icon: "skrill" },
     { id: 6, value: "westernunion", title: "WesternUnion", icon: "wu" },
   ];
-  streams: SingleVideo[] = [
-    {
-      id: 1,
-      title: "stream1",
-      url: "//vjs.zencdn.net/v/oceans.webm",
-      poster: "https://picsum.photos/400/251",
-      price: this.generateRandomPrice(),
-    },
-    {
-      id: 2,
-      title: "stream2",
-      url: "//vjs.zencdn.net/v/oceans.webm",
-      poster: "https://picsum.photos/400/252",
-      price: this.generateRandomPrice(),
-    },
-    {
-      id: 3,
-      title: "stream3",
-      url: "//vjs.zencdn.net/v/oceans.webm",
-      poster: "https://picsum.photos/400/253",
-      price: this.generateRandomPrice(),
-    },
-    {
-      id: 4,
-      title: "stream4",
-      url: "//vjs.zencdn.net/v/oceans.webm",
-      poster: "https://picsum.photos/400/254",
-      price: this.generateRandomPrice(),
-    },
-    {
-      id: 5,
-      title: "stream5",
-      url: "//vjs.zencdn.net/v/oceans.webm",
-      poster: "https://picsum.photos/400/255",
-      price: this.generateRandomPrice(),
-    },
-    {
-      id: 6,
-      title: "stream6",
-      url: "//vjs.zencdn.net/v/oceans.webm",
-      poster: "https://picsum.photos/400/256",
-      price: this.generateRandomPrice(),
-    },
-    {
-      id: 7,
-      title: "stream7",
-      url: "//vjs.zencdn.net/v/oceans.webm",
-      poster: "https://picsum.photos/400/257",
-      price: this.generateRandomPrice(),
-    },
-    {
-      id: 8,
-      title: "stream8",
-      url: "//vjs.zencdn.net/v/oceans.webm",
-      poster: "https://picsum.photos/400/258",
-      price: this.generateRandomPrice(),
-    },
-    {
-      id: 9,
-      title: "stream9",
-      url: "//vjs.zencdn.net/v/oceans.webm",
-      poster: "https://picsum.photos/400/259",
-      price: this.generateRandomPrice(),
-    },
-    {
-      id: 10,
-      title: "stream10",
-      url: "//vjs.zencdn.net/v/oceans.webm",
-      poster: "https://picsum.photos/400/260",
-      price: this.generateRandomPrice(),
-    },
-  ];
   isModalOpened = false;
   selectedPaymentOption: string | undefined = "";
   currentVideoForModal: SingleVideo | undefined;
+  streams: SingleVideo[] = [];
 
+  noPay() {
+    this.isModalOpened = false;
+    this.selectedPaymentOption = "";
+  }
   getIcon(icon: string): string {
     return require("@/assets/PaymentIcons/" + icon + ".png");
   }
 
-  generateRandomPrice() {
-    return Math.ceil(Math.random() * 101);
-  }
-
   openPaymentModal(selectedVideo: SingleVideo) {
     this.currentVideoForModal = selectedVideo;
+    console.log(this.currentVideoForModal);
     this.isModalOpened = true;
   }
 
   paymentAccept() {
-    console.log(this.currentPaymentObject);
-
+    if (this.currentPaymentObject) {
+      this.$router.push("/watchVideo");
+    }
+    this.selectedPaymentOption = "";
     this.isModalOpened = false;
   }
-  get currentPaymentObject(): SelectedPaymentOption | undefined {
+  get currentPaymentObject() {
     if (this.currentVideoForModal && this.selectedPaymentOption) {
       return {
         video: this.currentVideoForModal,
@@ -229,6 +141,9 @@ export default class VideosList extends Vue {
       };
     }
     return undefined;
+  }
+  async created() {
+    this.streams = await getVideos();
   }
 }
 </script>
