@@ -1,12 +1,13 @@
 <template>
   <div class="home">
     <div class="title">
-      <h1>welcome to home</h1>
+      <h1>Most Viewed Streams</h1>
     </div>
     <div class="content">
-      <div @click="clickTest(stream.id, stream.title)" class="loopDiv" v-for="stream in streams" :key="stream.id">
+      <div @click="clickTest(stream.id, stream.title, stream.price)" class="loopDiv" v-for="stream in streams" :key="stream.id">
         <video vjs-big-play-centered  :src="stream.url" :poster="stream.poster" controls:disabled muted class="video-js" data-setup='{}'> <source src= video.url  type="video/webm"> </video>
         <span>{{stream.title}}</span>
+        <span>{{stream.price}}</span>
     </div>
     <div v-if="myModal">
         <transition name="modal">
@@ -15,18 +16,22 @@
                 <div class="modal-dialog">
                     <div style="background-color: #f9f9f9" class="modal-content">
                         <div class="modal-header">
-                         <button @click="myModal=false" class="close">X</button>       
+                         <button  @click="myModal=false" class="closeButton">X</button>       
                         <h4 class="modal-title">Payment Options</h4>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
                                 <div class="payment-group">
                                     <div v-for="option in paymentOptions" :key="option.id">
-                                        <img :src="getIcon(option.icon)">
+                                        <div class="imgDiv">
+                                          <img width="100px" :src="getIcon(option.icon)">
+                                        </div>
                                         <input type="radio" :id="option.value" :value="option.value" v-model="picked"> 
+                                        
                                     </div>
                                 </div>
                                 <label>You have selected the {{currentVideo.title}} Video</label>
+                                <span>This stream costs: {{currentVideo.price}}€</span>
                                 <div class="modal-buttons-div">
                                   <button style="background-color:red"  class="modal-buttons">No Pay</button>
                                   <button style="background-color:cyan" class="modal-buttons">Pay</button>
@@ -51,8 +56,8 @@ import { Component, Vue } from 'vue-property-decorator';
 
 })
 export default class VideosList extends Vue {
-    paymentOptions: {id: number; value: string; title: string; icon: string}[]=[
-        {id: 1, value: "mastercard", title: "MasterCard", icon: 'mastercard'},
+    paymentOptions: {id: number; value: string; title: string; icon: string }[]=[
+        {id: 1, value: "mastercard", title: "MasterCard", icon: 'mastercard', },
         {id: 2, value: "paypal", title: "Paypal", icon: 'paypal'},
         {id: 3, value: "visa", title: "Visa", icon: 'visa'},
         {id: 4, value: "maestro", title: "Maestro", icon: 'maestro'},
@@ -60,45 +65,50 @@ export default class VideosList extends Vue {
         {id: 6, value: "westernunion", title: "WesternUnion", icon: 'wu'},
         
     ]
-    streams: { id: number; title: string; url: string; poster: string }[]= [
-    {id: 1,title: "video1", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/251"},
-    {id: 2,title: "video2", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/252"},
-    {id: 3,title: "video3", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/253"},
-    {id: 4,title: "video4", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/254"},
-    {id: 5,title: "video5", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/255"},
-    {id: 6,title: "video6", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/256"},
-    {id: 7,title: "video7", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/257"},
-    {id: 8,title: "video8", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/258"},
-    {id: 9,title: "video9", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/259"},
-    {id: 10,title: "video10", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/260"}
+    streams: { id: number; title: string; url: string; poster: string; price: number }[]= [
+    {id: 1,title: "stream1", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/251", price: this.generateRandomPrice()},
+    {id: 2,title: "stream2", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/252", price: this.generateRandomPrice()},
+    {id: 3,title: "stream3", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/253", price: this.generateRandomPrice()},
+    {id: 4,title: "stream4", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/254", price: this.generateRandomPrice()},
+    {id: 5,title: "stream5", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/255", price: this.generateRandomPrice()},
+    {id: 6,title: "stream6", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/256", price: this.generateRandomPrice()},
+    {id: 7,title: "stream7", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/257", price: this.generateRandomPrice()},
+    {id: 8,title: "stream8", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/258", price: this.generateRandomPrice()},
+    {id: 9,title: "stream9", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/259", price: this.generateRandomPrice()},
+    {id: 10,title: "stream10", url: "//vjs.zencdn.net/v/oceans.webm", poster: "https://picsum.photos/400/260", price: this.generateRandomPrice()}
   ] ;
   myModal= false;
- picked="";
- currentVideo={};
-
+  picked="";
+  currentVideo={};
+  
 getIcon(icon: string): string{
   return require('@/assets/PaymentIcons/'+ icon + '.png')
 }
 
- clickTest(id: number, title: string){
-     this.currentVideo = {id, title}
+generateRandomPrice(){
+  return Math.ceil(Math.random()*101)
+}
+
+ clickTest(id: number, title: string, price: number){
+     this.currentVideo = {id, title, price}
      this.myModal=true
  }
 }
 </script>
 <style scoped>
   .home{
-   
+    background-color: rgba(18, 18, 18, 1);
     height: 95vh;
     display: flex;
     flex-direction: column;
   }
   .title{
-    margin-top: 250px;
+    margin-top: 100px;
     color: white;
     justify-content: space-around;
   }
   .content{
+    background-color: rgba(18, 18, 18, 1);
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
@@ -116,7 +126,9 @@ getIcon(icon: string): string{
   }
   .video-js{
       height: 300px; 
-      width: 400px
+      max-width: 400px;
+    min-width: 200px;
+    width: 100%;
   }
 
 .modal-mask{
@@ -140,8 +152,22 @@ getIcon(icon: string): string{
     justify-content: space-around;
 }
 .modal-content{
-    width: 650px;
-    height: 350px;
+  display:flex;
+  flex-direction: column;
+  min-height: 350px;
+  height: 100%;
+  background-color: #f9f9f9;
+    opacity: .9;
+}
+.modal-header{
+  display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+}
+.modal-body{
+  display: flex;
+    flex-grow: 1;
 }
 .video-js .vjs-tech{ pointer-events: none; }
 
@@ -157,5 +183,19 @@ getIcon(icon: string): string{
 .payment-group{
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.closeButton{
+  width: 15%;
+  margin-left: 85%;
+  border: none;
+  background-color: red;
+  border-radius: 0 0 0 8px;
+}
+.form-group{
+  display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 </style>

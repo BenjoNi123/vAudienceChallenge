@@ -31,17 +31,11 @@ import {login} from '../Auth'
    },
   }
 )
-
-
-
 export default class LoginForm extends Vue {
-
     username="";
     password="";
     email=""
-     
     
-  
     testMe(){
         console.log('signup')
     }
@@ -53,7 +47,6 @@ export default class LoginForm extends Vue {
         catch(err) {
          console.log(err)
         }}
-  
 }
 </script>
 
@@ -65,25 +58,22 @@ export default class LoginForm extends Vue {
     max-width: 50vw;
     display: flex;
     flex-direction: column;
-    align-content: center;
-  
+    align-content: center; 
 }
 .inputField{
     width: 33vw;
     padding: 20px;
     margin: 5px 50px 20px;
-    border-radius: 8px; 
-
- 
+    border-radius: 8px;  
 }
 
 .iconStyle{
-padding: 10px; 
-            color: green; 
-            min-width: 50px; 
-            text-align: center; }
+    padding: 10px; 
+    color: green; 
+    min-width: 50px; 
+    text-align: center; }
 .buttonClass{
-       display: flex;
+    display: flex;
     justify-content: space-around;
     padding: 20px;
     margin: 0 50px;
@@ -93,9 +83,6 @@ padding: 10px;
 .buttonClass:hover{
     cursor: pointer;
 }
-
-
-
 .label{
         margin: 0px;
     display: flex;

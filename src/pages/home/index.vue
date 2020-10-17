@@ -18,7 +18,6 @@ export default class Home extends Vue {}
 </script>
 <style scoped>
   .home{
-   
     height: 95vh;
     display: flex;
     flex-direction: column;
