@@ -1,11 +1,12 @@
 <template>
   <div class="topbar">
-      <div>
-    <span @click="$router.push('/home')">Spect8.live</span>
+      <div class="leftNavGroup">
+        <MenuIcon style="margin-left: 5px" v-if="login==true" :size="32" fillColor="#F9F9F9" />
+        <span style="margin-left: 20px" @click="$router.push('/')">Spect8.live</span>
       </div>
       <div>
         
-    <button class="button" @click="takeHome()">Home</button>
+
     <button class="button" @click="signIn()">SignIn</button>
     <button class="button" @click="signUp()">SignUp</button>
 
@@ -14,9 +15,12 @@
 </template>
 <script lang="ts">
 import {  Component,Vue } from 'vue-property-decorator';
-@Component({})
+import MenuIcon from 'vue-material-design-icons/Menu.vue';
+@Component({
+   components:{ MenuIcon}
+})
 export default class TopBar extends Vue {
-
+  login=true;
      takeHome(){
       this.$router.push('/')
      
@@ -55,5 +59,9 @@ export default class TopBar extends Vue {
       color: white;
       height: 25px;
       border-radius: 8px;
+  }
+  .leftNavGroup{
+    display: flex; 
+    align-items: center;
   }
 </style>

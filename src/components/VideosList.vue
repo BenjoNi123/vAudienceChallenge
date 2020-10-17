@@ -17,7 +17,7 @@
                     <div style="background-color: #f9f9f9" class="modal-content">
                         <div class="modal-header">
                          <button  @click="myModal=false" class="closeButton">X</button>       
-                        <h4 class="modal-title">Payment Options</h4>
+                        <h2 class="modal-title">Payment Options</h2>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
@@ -30,11 +30,13 @@
                                         
                                     </div>
                                 </div>
-                                <label>You have selected the {{currentVideo.title}} Video</label>
-                                <span>This stream costs: {{currentVideo.price}}€</span>
+                                <div class="vidInfo">
+                                <span class="showVideo">You have selected: <span style="color: rgb(255 85 0);"> {{currentVideo.title}}</span></span>
+                                <span class="showPrice">Price: {{currentVideo.price}}€</span>
+                                </div>
                                 <div class="modal-buttons-div">
-                                  <button style="background-color:red"  class="modal-buttons">No Pay</button>
-                                  <button style="background-color:cyan" class="modal-buttons">Pay</button>
+                                  <button style="background-color:red"  class="modal-buttons" @click="myModal=false">No Pay</button>
+                                  <button style="background-color:cyan" class="modal-buttons" @click="paymentAccept()">Pay</button>
                                 </div>
                                 
                             </div>
@@ -81,18 +83,28 @@ export default class VideosList extends Vue {
   picked="";
   currentVideo={};
   
-getIcon(icon: string): string{
-  return require('@/assets/PaymentIcons/'+ icon + '.png')
-}
+  getIcon(icon: string): string{
+    return require('@/assets/PaymentIcons/'+ icon + '.png')
+  }
 
-generateRandomPrice(){
-  return Math.ceil(Math.random()*101)
-}
+  generateRandomPrice(){
+    return Math.ceil(Math.random()*101)
+  }
 
  clickTest(id: number, title: string, price: number){
      this.currentVideo = {id, title, price}
      this.myModal=true
  }
+ 
+ paymentAccept(){
+   if(this.currentPaymentObject)
+   console.log(this.currentPaymentObject)
+   this.myModal=false
+ }
+get currentPaymentObject(): object{
+  const Aobject={...this.currentVideo, paymentprop: this.picked};
+  return Aobject
+}
 }
 </script>
 <style scoped>
@@ -165,6 +177,10 @@ generateRandomPrice(){
     flex-grow: 1;
 
 }
+.modal-title{
+  padding-bottom: 20px;
+  border-bottom: solid 1px lightgrey
+}
 .modal-body{
   display: flex;
     flex-grow: 1;
@@ -197,5 +213,23 @@ generateRandomPrice(){
   display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+.vidInfo{
+  display: flex;
+    padding: 0 20px;
+}
+.showVideo{
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+}
+.showPrice{
+    display: flex;
+    flex-grow: 1;
+    height: 40px;
+    background-color: rgb(255 85 0);
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
 }
 </style>

@@ -4,6 +4,6 @@ export function login(token: string) {
     localStorage.setItem('token', token);
     router.push("/home")
 }
-function didLogin(): boolean {
+export function didLogin(): boolean {
     return !!localStorage.getItem("token"); // !!"" =  false
 }

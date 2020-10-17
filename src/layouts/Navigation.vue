@@ -1,16 +1,18 @@
 <template>
-    <div class="sideNav">
-        <MenuIcon :size="32" fillColor="#F9F9F9" />
-        
+    <div>
+        <SideBar/>
+        <TopBar/>
     </div>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import MenuIcon from 'vue-material-design-icons/Menu.vue';
+import SideBar from './SideBar.vue';
+import TopBar from './TopBar.vue'
 @Component({
     components:{
-        MenuIcon
+        SideBar,
+        TopBar
     }
 })
 export default class Navigation extends Vue {
@@ -18,18 +20,3 @@ export default class Navigation extends Vue {
 
 }
 </script>
-
-<style scoped>
-.sideNav{
-     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    position: fixed;
-    flex-direction: column;
-    width: 60px;
-    height: 100vh;
-    z-index: 1;  
-    top: 20px;
-
-}    
-</style>

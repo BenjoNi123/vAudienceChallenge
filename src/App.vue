@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <Navigation v-if="openNav"/>
-      <TopBar/>
+      <Navigation/>
+      
     </div>
     <router-view></router-view>
   </div>
@@ -12,10 +12,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Navigation from '@/layouts/Navigation.vue';
-import TopBar from '@/layouts/TopBar.vue'
-@Component({components: {Navigation, TopBar}})
+
+@Component({components: {Navigation}})
 export default class App extends Vue {
-  openNav = true;
+
 }
 
 </script>

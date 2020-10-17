@@ -27,5 +27,6 @@ export default class Home extends Vue {}
     align-content: center;
     align-items: center;
     height: 100vh;
+    color: #f9f9f9
     }
 </style>
