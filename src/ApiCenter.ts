@@ -70,7 +70,7 @@ function generateRandomPrice() {
   return Math.ceil(Math.random() * 101);
 }
 
-export async function getVideos(): Promise<SingleVideo[]> {
+export async function getVideos(searchText = ""): Promise<SingleVideo[]> {
   return [
     {
       id: 1,
@@ -142,7 +142,7 @@ export async function getVideos(): Promise<SingleVideo[]> {
       poster: "https://picsum.photos/400/260",
       price: generateRandomPrice(),
     },
-  ];
+  ].filter(v => v.title.includes(searchText));
 }
 
 export async function getVideoById(

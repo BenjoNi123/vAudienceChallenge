@@ -2,6 +2,10 @@
   <div class="home">
     <div class="title">
       <h1>Most Viewed Streams</h1>
+      <div>
+        <input v-model="filterInput" type="text" />
+        <button @click="filterVideos()">Filter Videos</button>
+      </div>
     </div>
     <div class="content">
       <div
@@ -101,7 +105,11 @@ export default class VideosList extends Vue {
   selectedPaymentOption: string | undefined = "";
   currentVideoForModal: SingleVideo | undefined;
   streams: SingleVideo[] = [];
+  filterInput = "";
 
+  async filterVideos() {
+    this.streams = await getVideos(this.filterInput);
+  }
   noPay() {
     this.isModalOpened = false;
     this.selectedPaymentOption = "";
