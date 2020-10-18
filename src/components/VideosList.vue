@@ -2,10 +2,10 @@
   <div class="home">
     <div class="title">
       <h1>Most Viewed Streams</h1>
-      <div>
+      <form @submit.prevent="filterVideos">
         <input v-model="filterInput" type="text" />
-        <button @click="filterVideos()">Filter Videos</button>
-      </div>
+        <button type="submit">Filter Videos</button>
+      </form>
     </div>
     <div class="content">
       <div
