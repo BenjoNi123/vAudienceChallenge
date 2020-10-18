@@ -112,7 +112,6 @@ export default class VideosList extends Vue {
 
   openPaymentModal(selectedVideo: SingleVideo) {
     this.currentVideoForModal = selectedVideo;
-    console.log(this.currentVideoForModal);
     this.isModalOpened = true;
   }
 
@@ -159,6 +158,7 @@ export default class VideosList extends Vue {
   display: flex;
   flex-direction: column;
   margin-bottom: 3%;
+  cursor: pointer;
 }
 
 .loopDiv span {

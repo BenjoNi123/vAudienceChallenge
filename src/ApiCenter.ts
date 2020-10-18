@@ -1,7 +1,6 @@
-import Axios, { AxiosResponse } from 'axios';
+import Axios, { AxiosResponse } from "axios";
 
-
-export const baseUrl = 'https://spect8-streams-backend.dev.vaudience.net/api/';
+export const baseUrl = "http://localhost:3000/";
 
 export interface AuthErrorResponse {
   code: number;
@@ -12,12 +11,14 @@ export interface AuthOkResponse {
   token: string;
 }
 
-export interface UserLogin{
-    user: string;
-    password: string;
+export interface UserLogin {
+  loginId: string;
+  password: string;
+  email: string;
+  id: number;
 }
 
-export interface UserRegister{
+export interface UserRegister {
   user: string;
   password: string;
   email: string;
@@ -31,27 +32,43 @@ export interface SingleVideo {
   price: number;
 }
 
-export async function apiSignUn(username: string, password: string, email: string){
-  const response: AxiosResponse<AuthOkResponse> = await Axios.post(baseUrl + 'auth/signup', {
-    "loginId" : username,
-    "password" : password,
-    "email" : email
+export async function apiSignUp(
+  username: string,
+  password: string,
+  email: string
+) {
+  const users: AxiosResponse<UserLogin[]> = await Axios.get(baseUrl + "users");
+  const usernameExists = users.data.find((x) => x.loginId == username);
+  const emailExists = users.data.find((x) => x.email == email);
+  if (usernameExists) {
+    return { error: "username is taken" };
+  }
+  if (emailExists) {
+    return { error: "email is taken" };
+  }
+  const response: AxiosResponse<any> = await Axios.post(baseUrl + "users", {
+    loginId: username,
+    password: password,
+    email: email,
   });
+  localStorage.setItem("token", "test");
   return response.data;
 }
 
 export async function apiLogin(username: string, password: string) {
-  const response: AxiosResponse<AuthOkResponse> = await Axios.post(baseUrl + 'auth/signin', {
-    "loginId" : username,
-    "password" : password
-  });
-  return response.data;
+  const response: AxiosResponse<UserLogin[]> = await Axios.get(
+    baseUrl + "users"
+  );
+
+  const signedInUser = response.data.find((x) => x.loginId == username);
+  if (signedInUser && signedInUser.password == password) {
+    return true;
+  } else return false;
 }
 
 function generateRandomPrice() {
   return Math.ceil(Math.random() * 101);
 }
-
 
 export async function getVideos(): Promise<SingleVideo[]> {
   return [
@@ -128,9 +145,11 @@ export async function getVideos(): Promise<SingleVideo[]> {
   ];
 }
 
-export async function getVideoById(videoId: number): Promise<SingleVideo | undefined>  {
+export async function getVideoById(
+  videoId: number
+): Promise<SingleVideo | undefined> {
   const allVideos = await getVideos();
-  return allVideos.find(v => v.id === videoId);
+  return allVideos.find((v) => v.id === videoId);
 }
 
 export interface SingleComment {
@@ -140,5 +159,7 @@ export interface SingleComment {
 }
 
 export async function getCommentsForVideo(id: number): Promise<SingleComment[]> {
-  return [{id: 0, from: 'user1', text: 'first comment'}, {id: 1,from: 'user2', text: 'second comment'}];
+  const response = await Axios.get("https://jsonplaceholder.typicode.com/comments?_limit=15")
+  return response.data;
+
 }

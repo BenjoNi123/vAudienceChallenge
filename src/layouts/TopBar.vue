@@ -1,28 +1,32 @@
 <template>
   <div class="topbar">
     <div class="leftNavGroup">
-      <MenuIcon
-        class="menuIcon"
-        v-if="login == true"
-        :size="32"
-        fillColor="#F9F9F9"
-      />
+      <SideBar />
       <span class="menuSpan" @click="$router.push('/')">Spect8.live</span>
     </div>
     <div>
-      <button class="button" @click="signIn()">SignIn</button>
-      <button class="button" @click="signUp()">SignUp</button>
+      <button v-if="!logedIn" class="button" @click="signIn()">SignIn</button>
+      <button v-if="!logedIn" class="button" @click="signUp()">SignUp</button>
+      <button v-if="logedIn" class="button" @click="logOut()">LogOut</button>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import MenuIcon from "vue-material-design-icons/Menu.vue";
+import { Component, Watch, Vue } from "vue-property-decorator";
+
+import SideBar from "@/layouts/SideBar.vue";
 @Component({
-  components: { MenuIcon },
+  components: { SideBar },
 })
 export default class TopBar extends Vue {
   login = true;
+  logedIn = false;
+  showSideNav = false;
+
+  mounted() {
+    this.logedIn = localStorage.getItem("token") ? true : false;
+  }
+
   takeHome() {
     this.$router.push("/");
   }
@@ -31,6 +35,14 @@ export default class TopBar extends Vue {
   }
   signUp() {
     this.$router.push("/signup");
+  }
+  logOut() {
+    localStorage.removeItem("token");
+    this.$router.push("/signIn");
+  }
+  @Watch("$route")
+  onRouteChanged() {
+    this.logedIn = localStorage.getItem("token") ? true : false;
   }
 }
 </script>
@@ -50,7 +62,7 @@ export default class TopBar extends Vue {
 .button {
   width: 100px;
   border: none;
-  margin-right: 20px;
+  margin-right: 40px;
   background-color: rgb(255 85 0);
   color: white;
   height: 25px;
@@ -64,14 +76,11 @@ export default class TopBar extends Vue {
   align-items: center;
 }
 
-.leftNavGroup span:hover {
-  cursor: pointer;
-}
 .menuIcon {
   margin-left: 5px;
 }
 
 .menuSpan {
-  margin-left: 20px;
+  margin-left: 60px;
 }
 </style>

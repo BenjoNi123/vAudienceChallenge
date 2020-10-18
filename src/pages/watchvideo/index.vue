@@ -11,8 +11,13 @@
           data-setup="{}"
         ></video>
       </div>
-      <div v-for="comment in currentVideoComments" :key="comment.id">
-        {{ comment.from }}:{{ comment.text }}
+      <div
+        class="commentsClass"
+        v-for="comment in currentVideoComments"
+        :key="comment.id"
+      >
+        <div class="commentHead">{{ comment.email }}:</div>
+        <div class="commentBody">{{ comment.body }}</div>
       </div>
       <div class="error" v-if="errorMessage">
         {{ errorMessage }}
@@ -60,9 +65,22 @@ export default class Watchvideo extends Vue {
 <style scoped>
 .watchVideoMain {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-content: center;
   padding-top: 120px;
   color: white;
+  background-color: rgba(18, 18, 18, 1);
+}
+.commentsClass {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px 15%;
+  text-align: left;
+  padding-bottom: 16px;
+}
+.commentHead {
+  padding-bottom: 5px;
 }
 </style>

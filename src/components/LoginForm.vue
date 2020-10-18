@@ -1,7 +1,10 @@
 <template>
   <div>
     <div>
-      <form @submit.prevent="TestMe()">
+      <div v-if="showError" class="errorBox">
+        <span class="errorText">Credentials are incorrect.</span>
+      </div>
+      <form @submit.prevent="submitLogin()">
         <div class="formClass">
           <span class="label">Enter Username or E-Mail:</span>
           <input
@@ -15,7 +18,7 @@
             <input
               v-model="password"
               class="inputField"
-              type="text"
+              type="password"
               placeholder="testerpass1234."
             />
           </div>
@@ -30,7 +33,6 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-import { apiLogin } from "../ApiCenter";
 import { login } from "../Auth";
 
 @Component({
@@ -39,14 +41,15 @@ import { login } from "../Auth";
 export default class LoginForm extends Vue {
   username = "";
   password = "";
+  showError = false;
 
-  testMe() {
-    console.log("signin");
-  }
-  async logMe() {
+  async submitLogin() {
+    this.showError = false;
     try {
-      const loginResponse = await apiLogin(this.username, this.password);
-      login(loginResponse.token);
+      const didLogin = await login(this.username, this.password);
+      if (!didLogin) {
+        this.showError = true;
+      }
     } catch (err) {
       console.log(err);
     }
@@ -95,5 +98,10 @@ export default class LoginForm extends Vue {
   margin-left: 50px;
   width: 33vw;
   padding: 20px 0 5px;
+}
+.errorBox {
+  background-color: red;
+  padding: 8px;
+  border-radius: 16px;
 }
 </style>
