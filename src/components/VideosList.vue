@@ -10,17 +10,7 @@
         v-for="stream in streams"
         :key="stream.id"
       >
-        <video
-          vjs-big-play-centered
-          :src="stream.url"
-          :poster="stream.poster"
-          controls:disabled
-          muted
-          class="video-js"
-          data-setup="{}"
-        >
-          <source src="video.url" type="video/webm" />
-        </video>
+        <img :src="stream.poster" />
         <span>{{ stream.title }}</span>
       </div>
       <div v-if="isModalOpened">
@@ -128,7 +118,7 @@ export default class VideosList extends Vue {
 
   paymentAccept() {
     if (this.currentPaymentObject) {
-      this.$router.push("/watchVideo");
+      this.$router.push("/watchvideo/" + this.currentPaymentObject.video.id);
     }
     this.selectedPaymentOption = "";
     this.isModalOpened = false;

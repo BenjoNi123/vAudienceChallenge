@@ -28,7 +28,6 @@ body {
   background-color: rgba(18, 18, 18, 1);
   height: 100vh;
   width: 100%;
-
   background-size: cover;
 }
 .routerClass {
@@ -39,6 +38,7 @@ body {
   display: flex;
   background-color: rgba(24, 24, 24, 1);
   position: fixed;
+  top: 0;
 }
 
 #nav a {

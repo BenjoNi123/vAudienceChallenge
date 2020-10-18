@@ -127,3 +127,18 @@ export async function getVideos(): Promise<SingleVideo[]> {
     },
   ];
 }
+
+export async function getVideoById(videoId: number): Promise<SingleVideo | undefined>  {
+  const allVideos = await getVideos();
+  return allVideos.find(v => v.id === videoId);
+}
+
+export interface SingleComment {
+  from: string;
+  text: string;
+  id: number;
+}
+
+export async function getCommentsForVideo(id: number): Promise<SingleComment[]> {
+  return [{id: 0, from: 'user1', text: 'first comment'}, {id: 1,from: 'user2', text: 'second comment'}];
+}

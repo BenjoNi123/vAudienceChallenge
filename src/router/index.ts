@@ -17,6 +17,11 @@ const routes: RouteConfig[] = [
     path: '/signup',
     name: 'Signup',
     component: ()=> import('../pages/signup/index.vue'),
+  },
+  {
+    path: '/watchvideo/:id',
+    name: 'WatchVideo',
+    component: ()=> import('../pages/watchvideo/index.vue')
   }
   
 ]
