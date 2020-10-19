@@ -40,9 +40,9 @@ npm install -g json-server
 json-server --watch db.json
 ```
 ### Starting UP the APP
-* get inside cloned directory use <b><u>npm install</u></b> to install all dependencies
+* get inside cloned directory use <b><u>"npm install"</u></b> to install all dependencies
 * use <b><u>npm run serve</u></b> to serve the app on localhost
-* in a new terminal run the JSON-Server via <b><u>json-server --watch db.json</u></b> command
+* in a new terminal run the JSON-Server via <b><u>"json-server --watch db.json"</u></b> command
 * Go to the link given to you at step 2 
 * Enjoy!
 ### Steps in creating this app
