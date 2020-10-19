@@ -24,8 +24,10 @@
               <div class="modal-dialog">
                 <div style="background-color: #f9f9f9" class="modal-content">
                   <div class="modal-header">
-                    <button @click="noPay()" class="closeButton">X</button>
                     <h2 class="modal-title">Payment Options</h2>
+                    <div v-if="showError">
+                      <b>You need to select a payment option</b>
+                    </div>
                   </div>
                   <div class="modal-body">
                     <div class="form-group">
@@ -106,6 +108,7 @@ export default class VideosList extends Vue {
   currentVideoForModal: SingleVideo | undefined;
   streams: SingleVideo[] = [];
   filterInput = "";
+  showError = false;
 
   async filterVideos() {
     this.streams = await getVideos(this.filterInput);
@@ -113,6 +116,7 @@ export default class VideosList extends Vue {
   noPay() {
     this.isModalOpened = false;
     this.selectedPaymentOption = "";
+    this.showError = false;
   }
   getIcon(icon: string): string {
     return require("@/assets/PaymentIcons/" + icon + ".png");
@@ -131,13 +135,14 @@ export default class VideosList extends Vue {
     this.isModalOpened = false;
   }
   get currentPaymentObject() {
+    this.showError = false;
     if (this.currentVideoForModal && this.selectedPaymentOption) {
       return {
         video: this.currentVideoForModal,
         paymentOption: this.selectedPaymentOption,
       };
-    }
-    return undefined;
+    } else this.showError = true;
+    return false;
   }
   async created() {
     this.streams = await getVideos();
